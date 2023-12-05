@@ -9,8 +9,16 @@ const InputSearch = () => {
 
   const handleSearch = (event) => {
     event.preventDefault();
-    const keyword = searchRef.current.value;
-    router.push(`/search/${keyword}`);
+    const keyword = searchRef.current.value.trim();
+    if (keyword) {
+      router.push(`/search/${keyword}`);
+    }
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSearch(event);
+    }
   };
   return (
     <div className='relative'>
@@ -18,6 +26,8 @@ const InputSearch = () => {
         placeholder='Search Anime....'
         className='w-full p-2 rounded'
         ref={searchRef}
+        onKeyDown={handleKeyPress}
+        autoFocus
       />
       <button className='absolute top-2 end-2' onClick={handleSearch}>
         <MagnifyingGlass size={23} />
